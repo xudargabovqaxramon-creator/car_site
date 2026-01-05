@@ -2,6 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
 const connectDB = require("./config/db.config")
+const AuthRouter = require("./router/auth.routes")
 require("dotenv").config()
 
 const PORT = process.env.PORT || 3000
@@ -11,7 +12,8 @@ market_app.use(cors())
 market_app.use(cookieParser())
 market_app.use(express.json())
 
-
+// Routes 
+market_app.use(AuthRouter)
 
 
 connectDB()
