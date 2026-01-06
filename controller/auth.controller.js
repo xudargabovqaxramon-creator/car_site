@@ -1,4 +1,3 @@
-
 const bcrypt = require("bcryptjs");
 const CustomErrorHandler = require("../utils/custom-error-handler");
 const { accessToken, refreshToken } = require("../utils/create-token");
@@ -12,7 +11,7 @@ const register = async (req, res, next) => {
     const foundeduser = await AuthSchema.findOne({ email });
 
     if (foundeduser) {
-      throw CustomErrorHandler.UnAuthorized(" User already exists");
+      throw CustomErrorHandler.Conflict(" User already exists");
     }
 
     const hashPassword = await bcrypt.hash(password, 12);
@@ -21,14 +20,14 @@ const register = async (req, res, next) => {
       Math.floor(Math.random() * 10)
     ).join("");
 
-    const time = Date.now() + 120000;
+    const otpTime = Date.now() + 120000;
 
     await AuthSchema.create({
       user_name,
       email,
       password: hashPassword,
       otp: randomNumbers,
-      otpTime: time,
+      otpTime,
     });
 
     await emailSender(randomNumbers, email);
@@ -60,9 +59,11 @@ const verify = async (req, res, next) => {
     if (foundeduser.otp !== otp) {
       throw CustomErrorHandler.BadRequest("Wrong otp");
     }
-
+    
     await AuthSchema.findByIdAndUpdate(foundeduser._id, {
       isVerified: true,
+      otp: null,
+      otpTime: null,
     });
 
     const payload = {
@@ -128,14 +129,19 @@ const resendCode = async (req, res, next) => {
   }
 };
 
+// LOG IN
+
 const Login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
     const foundeduser = await AuthSchema.findOne({ email });
 
-    if (foundeduser) {
-      throw CustomErrorHandler.UnAuthorized(" User already exists");
+    if (!foundeduser) {
+      throw CustomErrorHandler.NotFound(" User not found");
+    }
+    if (!foundeduser.isVerified) {
+      throw CustomErrorHandler.UnAuthorized("Account not verified");
     }
 
     const compare = await bcrypt.compare(password, foundeduser.password);
@@ -169,7 +175,10 @@ const Login = async (req, res, next) => {
     }
   } catch (error) {
     next(error);
-  }};
+  }
+};
+
+// LOG OUT
 
 const logout = async (req, res, next) => {
   try {
@@ -177,7 +186,10 @@ const logout = async (req, res, next) => {
     res.clearCookie("refresh_token");
   } catch (error) {
     next(error);
-  }};
+  }
+};
+
+// Forgot Password
 
 const forgotPassword = async (req, res, next) => {
   try {
@@ -188,6 +200,9 @@ const forgotPassword = async (req, res, next) => {
     if (!foundedUser) {
       throw CustomErrorHandler.UnAuthorized("User not found");
     }
+    if (foundedUser.otp !== otp) {
+      throw CustomErrorHandler.BadRequest("Wrong OTP");
+    }
 
     if (!foundedUser.isVerified) {
       throw CustomErrorHandler.UnAuthorized("User was not verified");
@@ -197,6 +212,8 @@ const forgotPassword = async (req, res, next) => {
 
     await AuthSchema.findByIdAndUpdate(foundedUser._id, {
       password: hashPassword,
+      otp: null,
+      otpTime: null,
     });
 
     res.status(200).json({
@@ -213,5 +230,5 @@ module.exports = {
   Login,
   verify,
   logout,
-  forgotPassword
+  forgotPassword,
 };

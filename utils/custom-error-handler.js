@@ -20,4 +20,8 @@ module.exports = class CustomErrorHandler extends Error {
     static Forbidden(message, error= []) {
         return new CustomErrorHandler(403, message,  error)
     }
+
+    static Conflict(message, error= []) {
+        return new CustomErrorHandler(409, message,  error)
+    }
 }
