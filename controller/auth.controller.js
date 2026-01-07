@@ -120,7 +120,7 @@ const resendCode = async (req, res, next) => {
     });
 
     res.status(201).json({
-      message: "Kod qayta yuborildi va u ikki daqiqada kuchga ega",
+      message: "Kod qayta yuborildi va u ikki daqiqa kuchga ega",
       randomNumbers,
     });
   } catch (error) {

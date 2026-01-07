@@ -14,7 +14,7 @@ module.exports = async function(code, email) {
         await transporter.sendMail({
             from:"xudargabovqaxramon@gmail.com",
             to:email,
-            subject: "Library verification",
+            subject: "cars3.0 verification",
             text: "Ushbu xabarda tasdiqlash kodi berilgan",
             html: `<b style="color:blue; font-size:20px;">${code}</b>`
         })
