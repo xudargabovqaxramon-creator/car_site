@@ -59,7 +59,7 @@ const verify = async (req, res, next) => {
     if (foundeduser.otp !== otp) {
       throw CustomErrorHandler.BadRequest("Wrong otp");
     }
-    
+
     await AuthSchema.findByIdAndUpdate(foundeduser._id, {
       isVerified: true,
       otp: null,
@@ -78,7 +78,7 @@ const verify = async (req, res, next) => {
 
     res.cookie("access_token", access_token, {
       httpOnly: true,
-      maxAge: 100 * 60 * 15,
+      maxAge: 15 * 60 * 1000,
     });
     res.cookie("refresh_token", refresh_token, {
       httpOnly: true,
@@ -116,9 +116,8 @@ const resendCode = async (req, res, next) => {
 
     await AuthSchema.findByIdAndUpdate(foundedUser._id, {
       otp: randomNumbers,
-      otptime,
+      otpTime: otptime,
     });
-    console.log(randomNumbers, email);
 
     res.status(201).json({
       message: "Kod qayta yuborildi va u ikki daqiqada kuchga ega",
@@ -159,7 +158,7 @@ const Login = async (req, res, next) => {
 
       res.cookie("access_token", access_token, {
         httpOnly: true,
-        maxAge: 100 * 60 * 15,
+        maxAge: 1000 * 60 * 15,
       });
       res.cookie("refresh_token", refresh_token, {
         httpOnly: true,
@@ -184,6 +183,7 @@ const logout = async (req, res, next) => {
   try {
     res.clearCookie("access_token");
     res.clearCookie("refresh_token");
+    res.status(200).json({ message: "Logged out" })
   } catch (error) {
     next(error);
   }
@@ -197,8 +197,14 @@ const forgotPassword = async (req, res, next) => {
 
     const foundedUser = await AuthSchema.findOne({ email });
 
+    if (foundedUser.otpTime < Date.now()) {
+    throw CustomErrorHandler.BadRequest("OTP expired");
+}
+
+
     if (!foundedUser) {
       throw CustomErrorHandler.UnAuthorized("User not found");
+      
     }
     if (foundedUser.otp !== otp) {
       throw CustomErrorHandler.BadRequest("Wrong OTP");
