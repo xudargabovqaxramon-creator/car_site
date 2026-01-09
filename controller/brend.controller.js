@@ -1,9 +1,10 @@
 const BrendSchema = require("../schema/brends.schema");
+const CarsSchema = require("../schema/cars.schema");
 const CustomErrorHandler = require("../utils/custom-error-handler");
 
 const get_Brends = async (req, res, next) => {
   try {
-    const foundedBrend = BrendSchema.find();
+    const foundedBrend = await BrendSchema.find();
     res.status(200).json(foundedBrend);
   } catch (error) {
     next(error);
@@ -13,11 +14,12 @@ const get_Brends = async (req, res, next) => {
 const get_one_Brends = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const Brend = BrendSchema.findById(id);
+    const Brend = await BrendSchema.findById(id);
 
     if (!Brend) {
       throw CustomErrorHandler.NotFound("Brend not found");
     }
+    const cars = await CarsSchema.findById({bre})
   } catch (error) {
     next(error);
   }
@@ -69,7 +71,7 @@ const update_Brends = async (req, res, next) => {
       logo: logo,
     });
 
-    res.status(201).json({
+    res.status(200).json({
       message: " Brend updated",
     });
   } catch (error) {
