@@ -1,8 +1,8 @@
 const CustomErrorHandler = require("../utils/custom-error-handler");
-const AuthValidator = require("../validation/auth.validation");
+const { BrendValidator } = require("../validation/brend.validation");
 
 module.exports = function (req, res, next) {
-  const { error } = AuthValidatorValidator(req.body);
+  const { error } = BrendValidator(req.body);
 
   if (error) {
     throw CustomErrorHandler.BadRequest(

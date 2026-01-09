@@ -230,6 +230,32 @@ const forgotPassword = async (req, res, next) => {
   }
 };
 
+
+
+// const changeRoleAdmin = async (req, res, next) => {
+//   try {
+//     const { email } = req.body;
+
+//     const foundedUser = await AuthSchema.findOne({ email });
+
+//     if (!foundedUser) {
+//       throw CustomErrorHandler.UnAuthorized("User not found");
+//     }
+
+//     await AuthSchema.findByIdAndUpdate(foundedUser._id, {
+//       role: "admin"
+//     });
+
+//     res.status(201).json({
+//       message: "change success"
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+
+
 module.exports = {
   register,
   resendCode,
