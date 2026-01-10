@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const Brend = new Schema(
   {
-    brand_name : {
+    brend_name : {
         type: String,
         required: true,
         trim: true,

@@ -1,21 +1,14 @@
 const CustomErrorHandler = require("../utils/custom-error-handler");
 
-
-module.exports = function (err, req, res, next) {
-  try {
-    if (err instanceof CustomErrorHandler) {
-      return res
-        .status(err.status)
-        .json({ message: err.message, error: err.errors });
-    }
-
-    if (err.name === "ValidationError") {
-      const errorMessage = err.message.split(",");
-      return res.status(400).json({ message: errorMessage });
-    }
-
-    res.status(500).json({ message: err.message });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+module.exports = (err, req, res, next) => {
+  if (err instanceof CustomErrorHandler) {
+    return res.status(err.status).json({
+      message: err.message,
+      errors: err.errors,
+    });
   }
+
+  res.status(500).json({
+    message: err.message || "Internal server error",
+  });
 };

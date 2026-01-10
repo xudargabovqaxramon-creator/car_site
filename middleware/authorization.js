@@ -8,7 +8,7 @@ module.exports = function(req, res, next){
             throw CustomErrorHandler.UnAuthorized("Access token not found")
         }
 
-        const decode = jwt.verify(access_token, process.env.SECRET_KY)
+        const decode = jwt.verify(access_token, process.env.SECRETKY)
         req.user = decode
 
         next()

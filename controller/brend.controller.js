@@ -19,7 +19,8 @@ const get_one_Brends = async (req, res, next) => {
     if (!Brend) {
       throw CustomErrorHandler.NotFound("Brend not found");
     }
-    const cars = await CarsSchema.findById({bre})
+    const cars = await CarsSchema.findById({brend_id:id})
+    res.status(200).json({cars})
   } catch (error) {
     next(error);
   }
@@ -27,8 +28,8 @@ const get_one_Brends = async (req, res, next) => {
 
 const add_Brend = async (req, res, next) => {
   try {
-    const { brand_name, logo } = req.body;
-    await BrendSchema.create({ brand_name, logo });
+    const { brend_name, logo } = req.body;
+    await BrendSchema.create( {brend_name:brend_name, logo:logo} );
 
     res.status(201).json({
       message: "Brend created",
@@ -59,7 +60,7 @@ const delete_brend = async (req, res, next) => {
 const update_Brends = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { brand_name, logo } = req.body;
+    const { brend_name, logo } = req.body;
     const Brend = await BrendSchema.findById(id);
 
     if (!Brend) {
@@ -67,7 +68,7 @@ const update_Brends = async (req, res, next) => {
     }
 
     await BrendSchema.findByIdAndUpdate(id, {
-      brand_name: brand_name,
+      brend_name: brend_name,
       logo: logo,
     });
 

@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
-const CarsValidator = Joi.object({
-  car_name: Joi.string()
+exports.CarsValidator =function(data){
+  const schema = Joi.object({car_name: Joi.string()
     .pattern(/^[a-zA-Z\s]+$/)
     .min(3)
     .required()
@@ -69,6 +69,6 @@ const CarsValidator = Joi.object({
       "string.max": "Faqat 400 ta harfga mumkin",
       "string.empty": "Description bo'sh bo'lishi mumkin emas",
     }),
-});
-
-module.exports = CarsValidator;
+  })
+    return schema.validate(data, { abortEarly: false });
+}

@@ -14,7 +14,6 @@ const logger = createLogger({
       db: process.env.MONGO_URI, 
       collection: "logs",
       level: "error",
-      options: { useUnifiedTopology: true }
     })
   ]
 });
