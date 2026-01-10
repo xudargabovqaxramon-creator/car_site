@@ -11,6 +11,11 @@ module.exports = function(req, res, next){
         const decode = jwt.verify(access_token, process.env.SECRET_KY)
         req.user = decode
 
+
+        if (!["superadmin", "admin"].includes(req.user.role)) {
+            throw CustomErrorHandler.Forbidden("You are not admin. superadmin")
+        }
+
         next()
     } catch (error) {
         next(error)

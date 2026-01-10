@@ -15,6 +15,10 @@ const Brend = new Schema(
         required: true,
         minlength: [5, "Kamida 5 ta harfdan iborat bolishi kerak"]
     }
+  },
+  {
+    versionKey:false,
+    timestamps:true
   }
 );
 
