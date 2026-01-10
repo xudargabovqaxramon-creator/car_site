@@ -8,9 +8,12 @@ const BrendRouter = require("./router/brends.routes")
 const CarRouter = require("./router/car.routes")
 require("dotenv").config()
 const ImgRouter = require("./router/img.routes")
+const logger = require("./utils/logger")
 
 const PORT = process.env.PORT || 3000
 const market_app = express()
+
+
 
 market_app.use(cors())
 market_app.use(cookieParser())
