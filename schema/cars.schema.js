@@ -11,7 +11,7 @@ const Cars = new Schema(
       minlength: [3, "Kamida 3 ta harf kiriting"],
     },
 
-    brand_id: {
+    brend_id: {
       type: Schema.ObjectId,
       ref: "Brend",
       required: true,

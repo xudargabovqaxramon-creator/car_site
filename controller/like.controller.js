@@ -1,12 +1,6 @@
 const likeSchema = require("../schema/like.schema");
 const CarsSchema = require("../schema/cars.schema");
-
-
-const myLikes = await likeSchema.find({ user_id: req.user.id })
-  .populate("car_id");
-
-const likeCount = await likeSchema.countDocuments({ car_id: carId });
-
+const CustomErrorHandler = require("../utils/custom-error-handler");
 
 const toggleLike = async (req, res, next) => {
   try {
@@ -39,8 +33,28 @@ const toggleLike = async (req, res, next) => {
   }
 };
 
+const getMyLikes = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const likes = await likeSchema.find({ user_id: userId }).populate("car_id");
+    res.status(200).json(likes);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getLikeCount = async (req, res, next) => {
+  try {
+    const carId = req.params.id;
+    const count = await likeSchema.countDocuments({ car_id: carId });
+    res.status(200).json({ likeCount: count });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
-myLikes, 
-toggleLike,
-likeCount
-}
+  toggleLike,
+  getMyLikes,
+  getLikeCount
+};

@@ -5,15 +5,15 @@ const CustomErrorHandler = require("../utils/custom-error-handler");
 
 const getCarsByBrand = async (req, res, next) => {
   try {
-    const { brand_id } = req.params;
+    const {id } = req.params;
 
-    const Brend = await BrendSchema.findById(brand_id);
+    const Brend = await BrendSchema.findById(id);
 
     if (!Brend) {
       throw CustomErrorHandler.NotFound("Brend not found");
     }
 
-    const car = await CarsSchema.find({ brand_id });
+    const car = await CarsSchema.find({ brend_id:id });
     res.status(200).json(car);
   } catch (error) {
     next(error);
@@ -46,13 +46,13 @@ const addcar = async (req, res, next) => {
       motor,
       tanirofka,
       release_year,
-      brand_id,
+      brend_id,
       distance,
       gearbox,
       description,
     } = req.body;
 
-    const Brend = await BrendSchema.findById(brand_id);
+    const Brend = await BrendSchema.findById(brend_id);
 
     if (!Brend) {
       throw CustomErrorHandler.NotFound("Brend not found");
@@ -64,7 +64,7 @@ const addcar = async (req, res, next) => {
       color,
       motor,
       release_year,
-      brand_id,
+      brend_id,
       distance,
       gearbox,
       description,
@@ -106,7 +106,7 @@ const updateCar = async (req, res, next) => {
       motor,
       tanirofka,
       release_year,
-      brand_id,
+      brend_id,
       distance,
       gearbox,
       description,
@@ -124,7 +124,7 @@ const updateCar = async (req, res, next) => {
       motor,
       tanirofka,
       release_year,
-      brand_id,
+      brend_id,
       distance,
       gearbox,
       description,
