@@ -1,3 +1,4 @@
+const { log } = require("winston");
 const BrendSchema = require("../schema/brends.schema");
 const CarsSchema = require("../schema/cars.schema");
 const CustomErrorHandler = require("../utils/custom-error-handler");
@@ -29,9 +30,8 @@ const get_one_Brends = async (req, res, next) => {
 const add_Brend = async (req, res, next) => {
   try {
     const { brend_name, logo } = req.body;
-    console.log(brend_name);
     
-    await BrendSchema.create( {brend_name, logo} );
+    await BrendSchema.create({brend_name:brend_name, logo:logo});
 
     res.status(201).json({
       message: "Brend created",

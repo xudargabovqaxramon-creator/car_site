@@ -31,6 +31,8 @@ market_app.use(errorMiddleware)
 logger.info("sayt ishladi")
 connectDB()
 
+
+
 market_app.listen(PORT, ()=> {
     console.log("server running at: " +PORT)
 })

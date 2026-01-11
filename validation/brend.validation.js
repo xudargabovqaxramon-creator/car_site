@@ -8,7 +8,7 @@ exports.BrendValidator = function (data) {
       .min(2)
       .max(50)
       .required().messages({
-        "any.required": "ishladi"
+        "any.required": " brend_name kiritish majburiy"
       }),
     logo: Joi.string().uri().required(),
   });
