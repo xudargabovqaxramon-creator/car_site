@@ -13,7 +13,7 @@ const BrendRouter = Router();
 
 
 
-BrendRouter.get("/get_brends", get_Brends);
+BrendRouter.get("/get_all_brend", get_Brends);
 BrendRouter.get("/get_one_brend/:id", get_one_Brends);
 BrendRouter.post("/add_brend",authorization,roleCheck,  brendValidationMiddleware, add_Brend);
 BrendRouter.put("/update_brend/:id", authorization,roleCheck, brendValidationMiddleware,update_Brends);

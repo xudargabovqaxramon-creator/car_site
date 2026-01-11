@@ -9,6 +9,7 @@ const BrendRouter = require("./router/brends.routes")
 const CarRouter = require("./router/car.routes")
 const ImgRouter = require("./router/img.routes")
 const logger = require("./utils/logger")
+const profileRouter = require("./router/profile.routes")
 
 const PORT = process.env.PORT || 3000
 const market_app = express()
@@ -22,6 +23,7 @@ market_app.use(express.json())
 market_app.use(AuthRouter)
 market_app.use(BrendRouter)
 market_app.use(CarRouter)
+market_app.use(profileRouter)
 market_app.use(ImgRouter)
 
 market_app.use(errorMiddleware)

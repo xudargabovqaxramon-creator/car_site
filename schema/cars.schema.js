@@ -22,7 +22,7 @@ const Cars = new Schema(
       required: true,
     },
 
-    tanirofkasi: {
+    tanirofka: {
       type: String,
       trim: true,
       required: true,

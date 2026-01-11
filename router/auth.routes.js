@@ -9,7 +9,6 @@ AuthRouter.post("/registr",authValidationMiddleware, register)
 AuthRouter.post("/login",Login)
 AuthRouter.post("/verify",verify)
 AuthRouter.get("/refresh",refreshToken)
-AuthRouter.get("/logout", logout)
 AuthRouter.post("/resend_otp", resendCode)
 
 module.exports = AuthRouter

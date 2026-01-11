@@ -6,7 +6,7 @@ const roleCheck = require("../middleware/role-check")
 const CarRouter= Router()
 
 
-CarRouter.get("/get_cars",getCarsByBrand)
+CarRouter.get("/get_all_car",getCarsByBrand)
 CarRouter.get("/get_one_car/:id",get_one_Car)
 CarRouter.post("/add_car" ,authorization,roleCheck, carValidationMiddleware, addcar)
 CarRouter.put("/update_car/:id" ,authorization,roleCheck, carValidationMiddleware, updateCar)

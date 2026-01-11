@@ -19,8 +19,8 @@ const get_one_Brends = async (req, res, next) => {
     if (!Brend) {
       throw CustomErrorHandler.NotFound("Brend not found");
     }
-    const cars = await CarsSchema.findById({brend_id:id})
-    res.status(200).json({cars})
+    const cars = await CarsSchema.find({brend_id:id})
+    res.status(200).json(cars)
   } catch (error) {
     next(error);
   }

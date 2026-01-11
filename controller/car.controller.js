@@ -1,5 +1,6 @@
 const BrendSchema = require("../schema/brends.schema");
 const CarsSchema = require("../schema/cars.schema");
+const likeSchema = require("../schema/like.schema");
 const CustomErrorHandler = require("../utils/custom-error-handler");
 
 const getCarsByBrand = async (req, res, next) => {
@@ -28,7 +29,9 @@ const get_one_Car = async (req, res, next) => {
       throw CustomErrorHandler.NotFound("car not found");
     }
 
-    res.status(200).json(car)
+    
+const likeCount = await likeSchema.countDocuments({ car_id: id })
+    res.status(200).json({car, likeCount})
   } catch (error) {
     next(error);
   }
@@ -41,7 +44,7 @@ const addcar = async (req, res, next) => {
       price,
       color,
       motor,
-      tanirofkasi,
+      tanirofka,
       release_year,
       brand_id,
       distance,
@@ -57,7 +60,7 @@ const addcar = async (req, res, next) => {
     await CarsSchema.create({
       car_name,
       price,
-      tanirofkasi,
+      tanirofka,
       color,
       motor,
       release_year,
@@ -101,7 +104,7 @@ const updateCar = async (req, res, next) => {
       price,
       color,
       motor,
-      tanirofkasi,
+      tanirofka,
       release_year,
       brand_id,
       distance,
@@ -119,7 +122,7 @@ const updateCar = async (req, res, next) => {
       price,
       color,
       motor,
-      tanirofkasi,
+      tanirofka,
       release_year,
       brand_id,
       distance,
