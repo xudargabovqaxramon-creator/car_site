@@ -1,6 +1,5 @@
 const { number } = require("joi");
 const { Schema, model } = require("mongoose");
-const upload = require("../utils/multer");
 
 const Auth = new Schema(
   {
@@ -34,7 +33,7 @@ const Auth = new Schema(
       required: [true, "password kiritish majburiy"],
       minlength: [8, "8 ta belgidan iborat bolsin"],
     },
-    avatar_img: {
+    avatar: {
       type: String,
       trim: true,
       default: "avaaee",
@@ -48,10 +47,6 @@ const Auth = new Schema(
         message: `{VALUE} bunday qiymat qabul qilinmaydi`,
       },
       default: "user",
-    },
-    is_active: {
-      type: Boolean,
-      default: true,
     },
     otp: {
       type: String,

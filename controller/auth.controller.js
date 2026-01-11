@@ -6,7 +6,7 @@ const AuthSchema = require("../schema/auth.schema");
 
 const register = async (req, res, next) => {
   try {
-    const { user_name, email, password } = req.body;
+    const { user_name, full_name,email, password } = req.body;
 
     const foundeduser = await AuthSchema.findOne({ email });
 
@@ -24,6 +24,7 @@ const register = async (req, res, next) => {
 
     await AuthSchema.create({
       user_name,
+      full_name,
       email,
       password: hashPassword,
       otp: randomNumbers,
@@ -68,6 +69,7 @@ const verify = async (req, res, next) => {
 
     const payload = {
       user_name: foundeduser.user_name,
+      full_name:foundeduser.full_name,
       email: foundeduser.email,
       role: foundeduser.role,
       id: foundeduser._id,
