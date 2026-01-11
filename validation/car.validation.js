@@ -10,7 +10,7 @@ exports.CarsValidator = function(data){
       "string.pattern.base": "Faqat harf va bo'sh joy kiriting",
     }),
 
-  brand_id: Joi.string().max(24).required(),
+  brend_id: Joi.string().max(24).required(),
 
   price: Joi.number().required().messages({
     "number.base": "Narx faqat raqam bo'lishi kerak"

@@ -20,7 +20,7 @@ const get_one_Brends = async (req, res, next) => {
       throw CustomErrorHandler.NotFound("Brend not found");
     }
     const cars = await CarsSchema.find({brend_id:id})
-    res.status(200).json(cars)
+    res.status(200).json({ Brend, cars })
   } catch (error) {
     next(error);
   }
@@ -29,7 +29,9 @@ const get_one_Brends = async (req, res, next) => {
 const add_Brend = async (req, res, next) => {
   try {
     const { brend_name, logo } = req.body;
-    await BrendSchema.create( {brend_name:brend_name, logo:logo} );
+    console.log(brend_name);
+    
+    await BrendSchema.create( {brend_name, logo} );
 
     res.status(201).json({
       message: "Brend created",

@@ -6,6 +6,10 @@ exports.AuthValidator = function (data) {
       .pattern(/^[a-zA-Z0-9]+$/)
       .min(3)
       .required(),
+    full_name: Joi.string()
+      .pattern(/^[a-zA-Z0-9]+$/)
+      .min(3)
+      .required(),
     email: Joi.string()
       .email({ tlds: { allow: false } })
       .min(15)

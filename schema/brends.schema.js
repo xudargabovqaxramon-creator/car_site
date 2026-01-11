@@ -6,7 +6,7 @@ const Brend = new Schema(
         type: String,
         required: true,
         trim: true,
-        unique:true,
+        // unique:true,
         minlength:[3, "Kamida 3 ta harf kiriting"],
         match: [/^[a-zA-Z]+$/, "Faqat harf  kiriting"]
     },
@@ -21,6 +21,7 @@ const Brend = new Schema(
     timestamps:true
   }
 );
+
 
 const BrendSchema = model("Brend", Brend);
 
